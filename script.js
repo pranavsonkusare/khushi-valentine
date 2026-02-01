@@ -2,41 +2,59 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const music = document.getElementById("music");
 
-noBtn.addEventListener("mouseover", moveNo);
+// Move NO button slightly (playful, not disappearing)
+noBtn.addEventListener("mouseenter", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
 
 function moveNo() {
-  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+  const maxX = 200;
+  const maxY = 80;
+
+  const x = Math.random() * maxX - maxX / 2;
+  const y = Math.random() * maxY - maxY / 2;
+
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
+// YES clicked
 yesBtn.addEventListener("click", () => {
-  music.play();
+  // Play Titanic instrumental
+  music.src =
+    "https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1";
+
   startConfetti();
+
   document.querySelector(".container").innerHTML = `
-    <h1>Yayyy Khushi 💖</h1>
-    <h2>You made me so happy ❤️</h2>
+    <h1>Yayyy 💖😍</h1>
+    <p class="question">
+      Khushi Sharma, you just made my heart melt ❤️<br>
+      Happy Valentine’s Day 💕
+    </p>
   `;
 });
 
-// Confetti
+// CONFETTI
 const canvas = document.getElementById("confetti");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 let confetti = [];
 
 function startConfetti() {
-  for (let i = 0; i < 150; i++) {
+  confetti = [];
+  for (let i = 0; i < 250; i++) {
     confetti.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 6 + 2,
-      d: Math.random() * 4 + 1,
-      color: `hsl(${Math.random() * 360},100%,50%)`
+      d: Math.random() * 4 + 2,
+      color: `hsl(${Math.random() * 360},100%,60%)`
     });
   }
   animate();
